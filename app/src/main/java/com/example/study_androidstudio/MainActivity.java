@@ -2,6 +2,7 @@ package com.example.study_androidstudio;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 問題6：ボタンを連打するとカウントがめちゃくちゃになるバグ
         findViewById(R.id.btnProblem6).setOnClickListener(v -> {
-            triggerAsyncDownload();
+            triggerAsyncDownload((Button) v);
         });
     }
 
@@ -111,8 +112,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // --- 問題6：非同期処理のバグ（上級・マルチスレッド） ---
-    private void triggerAsyncDownload() {
+    private void triggerAsyncDownload(final Button btn) {
         tvResult.setText("ダウンロード開始...");
+        // 連打対策：ダウンロード中はボタンを押せなくする
+        btn.setEnabled(false);
 
         // 模擬的な非同期処理（1秒後にカウントを増やすスレッドを起動）
         new Thread(() -> {
@@ -123,9 +126,12 @@ public class MainActivity extends AppCompatActivity {
                 // 画面を更新する（Androidはメインスレッド以外から画面を触るとエラーになるためrunOnUiThreadを使用）
                 runOnUiThread(() -> {
                     tvResult.setText("ダウンロード完了！合計: " + downloadCount + "回");
+                    // 完了したのでボタンを再度有効化
+                    btn.setEnabled(true);
                 });
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                runOnUiThread(() -> btn.setEnabled(true));
             }
         }).start();
     }
