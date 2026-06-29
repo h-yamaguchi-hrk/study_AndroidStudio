@@ -34,6 +34,30 @@
         android:text="問題3：強制終了バグ（確認用）"
         android:layout_marginBottom="16dp"/>
 
+    <!-- 問題4用 -->
+    <Button
+        android:id="@+id/btnProblem4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="問題4：型変換と入力のバグ"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- 問題5用 -->
+    <Button
+        android:id="@+id/btnProblem5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="問題5：文字列比較の落とし穴"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- 問題6用 -->
+    <Button
+        android:id="@+id/btnProblem6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="問題6：非同期処理の罠（タップ連打）"
+        android:layout_marginBottom="16dp"/>
+
     <TextView
         android:id="@+id/tvResult"
         android:layout_width="match_parent"
