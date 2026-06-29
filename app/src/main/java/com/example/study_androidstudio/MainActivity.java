@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         // 【デバッグワーク】この行にブレークポイントを置き、変数aとbの中身を確認せよ
         int wrongMultiplier = 10;
         // バグ：本来は (a + b) ですが、練習用に multiplier を掛けています
-        int total = (a + b) * wrongMultiplier;
+        int total = (a + b);
         return total;
     }
 
@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 1; i <= 5; i++) {
             sum += i;
             // バグ：i == 3 のときだけ合計を2倍にする謎の処理
-            if (i == 3) {
-                sum *= 2;
-            }
+//            if (i == 3) {
+//                sum *= 2;
+//            }
         }
         return sum;
     }
