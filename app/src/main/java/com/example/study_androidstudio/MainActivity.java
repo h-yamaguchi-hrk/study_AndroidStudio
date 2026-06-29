@@ -3,15 +3,19 @@ package com.example.study_androidstudio;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvResult;
+    private EditText etInputMain;
+    private EditText etInputSub;
     private static final String TAG = "DebugPractice";
     private int downloadCount = 0;
 
@@ -21,57 +25,64 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tvResult = findViewById(R.id.tvResult);
+        etInputMain = findViewById(R.id.etInputMain);
+        etInputSub = findViewById(R.id.etInputSub);
 
-        // 問題1：計算バグ
+        // --- 問題1〜9 (既存) ---
         findViewById(R.id.btnProblem1).setOnClickListener(v -> {
             int result = calculateTotal(10, 20);
             tvResult.setText("計算結果: " + result);
         });
 
-        // 問題2：ループ合計バグ
         findViewById(R.id.btnProblem2).setOnClickListener(v -> {
             int result = runLoopAndSum();
             tvResult.setText("ループ合計: " + result);
         });
 
-        // 問題3：NullPointerExceptionバグ
         findViewById(R.id.btnProblem3).setOnClickListener(v -> {
             causeCrash();
         });
 
-        // 問題4：型変換 (修正済み)
         findViewById(R.id.btnProblem4).setOnClickListener(v -> {
             String userInput = "123a"; 
             processUserInput(userInput);
         });
 
-        // 問題5：文字列比較 (修正済み)
         findViewById(R.id.btnProblem5).setOnClickListener(v -> {
             checkAdminStatus();
         });
 
-        // 問題6：非同期処理の連打対策（修正済み）
         findViewById(R.id.btnProblem6).setOnClickListener(v -> {
             triggerAsyncDownload((Button) v);
         });
 
-        // 問題7：IndexOutOfBoundsExceptionバグ
         findViewById(R.id.btnProblem7).setOnClickListener(v -> {
             accessInvalidIndex();
         });
 
-        // 問題8：浮動小数点の精度バグ
         findViewById(R.id.btnProblem8).setOnClickListener(v -> {
             checkFloatingPointMath();
         });
 
-        // 問題9：StackOverflowErrorバグ
         findViewById(R.id.btnProblem9).setOnClickListener(v -> {
             startInfiniteRecursion(0);
         });
+
+        // --- 問題10〜12 (新規) ---
+        findViewById(R.id.btnProblem10).setOnClickListener(v -> {
+            handleEmptyInput();
+        });
+
+        findViewById(R.id.btnProblem11).setOnClickListener(v -> {
+            validateEmailFormat();
+        });
+
+        findViewById(R.id.btnProblem12).setOnClickListener(v -> {
+            checkPasswordMatch();
+        });
     }
 
-    // --- 問題1〜3 (省略せずに維持) ---
+    // --- 問題1〜9のメソッド (省略せずに維持) ---
     private int calculateTotal(int a, int b) {
         int wrongMultiplier = 10;
         return (a + b) * wrongMultiplier;
@@ -92,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "サイズは: " + size);
     }
 
-    // --- 問題4：型変換 (修正済み) ---
     private void processUserInput(String input) {
         try {
             int score = Integer.parseInt(input);
@@ -102,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // --- 問題5：文字列比較 (修正済み) ---
     private void checkAdminStatus() {
         String currentRole = "ADMIN"; 
         if (currentRole.equals("ADMIN")) {
@@ -112,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // --- 問題6：非同期処理 ---
     private void triggerAsyncDownload(final Button btn) {
         tvResult.setText("ダウンロード中...");
         btn.setEnabled(false);
@@ -131,22 +139,17 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    // --- 問題7：リストの範囲外アクセス ---
     private void accessInvalidIndex() {
         List<String> fruits = new ArrayList<>(Arrays.asList("Apple", "Banana", "Cherry"));
-        // 3つの要素（0, 1, 2）があるリストで、fruits.get(3) を呼ぼうとしてクラッシュします
-        String lastFruit = fruits.get(fruits.size() -1); // 💥 sizeは3なので index 3 は存在しない
+        String lastFruit = fruits.get(fruits.size() - 1);
         tvResult.setText("最後のフルーツ: " + lastFruit);
     }
 
-    // --- 問題8：小数計算の罠 ---
     private void checkFloatingPointMath() {
         double value = 0.0;
         for (int i = 0; i < 10; i++) {
             value += 0.1;
         }
-
-        // 0.1を10回足すと 1.0 になるはずだが、doubleの精度誤差で 0.99999... になる
         if (Math.abs(value - 1.0) < 0.000001) {
             tvResult.setText("結果はピッタリ 1.0 です");
         } else {
@@ -154,18 +157,53 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    // --- 問題9：無限再帰の修正案 ---
     private void startInfiniteRecursion(int count) {
-        // 1. 終了条件（ここが重要！）
         if (count >= 100) {
             tvResult.setText("100回呼び出したので安全に停止しました");
-            return; // ここでメソッドを抜ける
+            return;
         }
-
         Log.d(TAG, "呼び出し回数: " + count);
-
-        // 2. 次の呼び出し
         startInfiniteRecursion(count + 1);
+    }
+
+    // --- 問題10：未入力チェックのバグ ---
+    private void handleEmptyInput() {
+        // メイン入力欄からテキストを取得
+        String name = etInputMain.getText().toString();
+        
+        // バグ：入力が空の場合を考慮せずに最初の文字にアクセスしようとしてクラッシュします
+        // デバッグワーク：空入力のときに StringIndexOutOfBoundsException が発生することを確認せよ
+        char firstChar = name.charAt(0); 
+        tvResult.setText("あなたの名前の頭文字は: " + firstChar);
+    }
+
+    // --- 問題11：メール形式バリデーションの罠 ---
+    private void validateEmailFormat() {
+        String email = etInputMain.getText().toString();
+        // 簡易的なメールチェック用正規表現
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        
+        // バグ：条件式の論理が逆になっている、または正規表現が不完全？
+        // デバッグワーク：正しいメールを入れても「不正」と出る理由を突き止めよ
+        if (!Pattern.matches(emailPattern, email)) {
+            tvResult.setText("有効なメールアドレスです");
+        } else {
+            tvResult.setText("不正な形式のメールアドレスです");
+        }
+    }
+
+    // --- 問題12：パスワード一致判定のミス ---
+    private void checkPasswordMatch() {
+        String pass1 = etInputMain.getText().toString();
+        String pass2 = etInputSub.getText().toString();
+
+        // バグ：Javaの文字列比較でありがちなミス、または空白の考慮漏れ？
+        // デバッグワーク：全く同じ文字を入れても「不一致」になる理由を調査せよ
+        // (ヒント: etInputSub.getText().toString() に意図しない何かが混じっているかも？)
+        if (pass1 == pass2) {
+            tvResult.setText("パスワードが一致しました");
+        } else {
+            tvResult.setText("パスワードが一致しません");
+        }
     }
 }

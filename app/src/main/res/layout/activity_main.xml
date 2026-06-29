@@ -82,6 +82,48 @@
         android:text="問題9：無限呼び出し（スタックオーバーフロー）"
         android:layout_marginBottom="16dp"/>
 
+    <!-- 文字入力テスト用セクション -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="▼ 文字入力テストエリア"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/etInputMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="メイン入力（名前や数値など）"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/etInputSub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="サブ入力（確認用パスワードなど）"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/btnProblem10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="問題10：未入力チェックのバグ"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/btnProblem11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="問題11：メール形式バリデーションの罠"/>
+
+    <Button
+        android:id="@+id/btnProblem12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="問題12：パスワード一致判定のミス"/>
+
     <TextView
         android:id="@+id/tvResult"
         android:layout_width="match_parent"
