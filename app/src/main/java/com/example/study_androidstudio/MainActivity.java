@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     // --- 問題5：文字列比較のバグ（中級・文字コードの罠） ---
     private void checkAdminStatus() {
         // サーバーや入力フォームから取得したデータ（末尾に目に見えないスペースが入っている想定）
-        String currentRole = "ADMIN ";
+        String currentRole = "ADMIN";
 
         // 【デバッグワーク】この行にブレークポイントを置き、変数「currentRole」を右クリック。
         // 「Evaluate Expression」を開き、変数の正確な文字数や中身を調査せよ。
