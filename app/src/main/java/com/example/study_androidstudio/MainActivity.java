@@ -2,9 +2,10 @@ package com.example.study_androidstudio;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         tvResult = findViewById(R.id.tvResult);
 
-        // 問題1：ボタンを押すと「10 + 20 = 30」と表示したいのに、なぜか「200」になる
+        // 問題1：ボタンを押すと「10 + 20 = 30」と表示したいのに、なぜか値がおかしくなる
         findViewById(R.id.btnProblem1).setOnClickListener(v -> {
             int result = calculateTotal(10, 20);
             tvResult.setText("計算結果: " + result);
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "calculateTotalが呼び出されました。a=" + a + ", b=" + b);
         // 【デバッグワーク】この行にブレークポイントを置き、変数aとbの中身を確認せよ
         int wrongMultiplier = 10;
-        int total = (a + b);
+        // バグ：本来は (a + b) ですが、練習用に multiplier を掛けています
+        int total = (a + b) * wrongMultiplier;
         return total;
     }
 
@@ -50,12 +52,12 @@ public class MainActivity extends AppCompatActivity {
     private int runLoopAndSum() {
         int sum = 0;
         // 【デバッグワーク】for文の中にブレークポイントを置き、ステップ実行（F8）で変数の変化を追え
-        // 【応用】条件付きブレークポイントで「i == 3」のときのsumの値を確認せよ
         for (int i = 1; i <= 5; i++) {
             sum += i;
-//            if (i == 3) {
-//                sum *= 2; // 予期せぬおかしな計算が紛れ込んでいる？
-//            }
+            // バグ：i == 3 のときだけ合計を2倍にする謎の処理
+            if (i == 3) {
+                sum *= 2;
+            }
         }
         return sum;
     }
@@ -63,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
     // --- 問題3のバグメソッド ---
     private void causeCrash() {
         // 【デバッグワーク】アプリが落ちた後、Logcatを開いて「FATAL EXCEPTION」を探せ
-        // エラーログの何行目にあなたのコード（MainActivity.java）が指摘されているか特定せよ
-        List<String> textList = null;
-        int size = textList.size(); // nullオブジェクトに対してアクセスしているためクラッシュする
+        List<String> textList = new ArrayList<>();
+        // バグ：nullオブジェクトに対してアクセスしているためクラッシュする
+        int size = textList.size();
         Log.d(TAG, "サイズは: " + size);
     }
 }
