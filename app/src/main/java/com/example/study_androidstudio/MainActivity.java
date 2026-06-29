@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     private void accessInvalidIndex() {
         List<String> fruits = new ArrayList<>(Arrays.asList("Apple", "Banana", "Cherry"));
         // 3つの要素（0, 1, 2）があるリストで、fruits.get(3) を呼ぼうとしてクラッシュします
-        String lastFruit = fruits.get(fruits.size()); // 💥 sizeは3なので index 3 は存在しない
+        String lastFruit = fruits.get(fruits.size() -1); // 💥 sizeは3なので index 3 は存在しない
         tvResult.setText("最後のフルーツ: " + lastFruit);
     }
 
@@ -154,9 +154,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // --- 問題9：無限再帰 ---
+
+    // --- 問題9：無限再帰の修正案 ---
     private void startInfiniteRecursion(int count) {
+        // 1. 終了条件（ここが重要！）
+        if (count >= 100) {
+            tvResult.setText("100回呼び出したので安全に停止しました");
+            return; // ここでメソッドを抜ける
+        }
+
         Log.d(TAG, "呼び出し回数: " + count);
-        startInfiniteRecursion(count + 1); // 💥 止まらない呼び出し
+
+        // 2. 次の呼び出し
+        startInfiniteRecursion(count + 1);
     }
 }
