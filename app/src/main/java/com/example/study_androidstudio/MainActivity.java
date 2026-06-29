@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 0.1を10回足すと 1.0 になるはずだが、doubleの精度誤差で 0.99999... になる
-        if (value == 1.0) {
+        if (Math.abs(value - 1.0) < 0.000001) {
             tvResult.setText("結果はピッタリ 1.0 です");
         } else {
             tvResult.setText("1.0 ではありません。実際は: " + value);
