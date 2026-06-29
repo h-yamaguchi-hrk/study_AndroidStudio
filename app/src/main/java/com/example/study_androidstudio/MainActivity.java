@@ -5,6 +5,8 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,113 +22,106 @@ public class MainActivity extends AppCompatActivity {
 
         tvResult = findViewById(R.id.tvResult);
 
-        // 問題1：ボタンを押すと「10 + 20 = 30」と表示したいのに、なぜか値がおかしくなる
+        // 問題1：計算バグ
         findViewById(R.id.btnProblem1).setOnClickListener(v -> {
             int result = calculateTotal(10, 20);
             tvResult.setText("計算結果: " + result);
         });
 
-        // 問題2：ボタンを押すと「1から5まで足した結果（15）」を表示したいのに、奇妙な値になる
+        // 問題2：ループ合計バグ
         findViewById(R.id.btnProblem2).setOnClickListener(v -> {
             int result = runLoopAndSum();
             tvResult.setText("ループ合計: " + result);
         });
 
-        // 問題3：ボタンを押すとアプリが強制終了（クラッシュ）する
+        // 問題3：NullPointerExceptionバグ
         findViewById(R.id.btnProblem3).setOnClickListener(v -> {
             causeCrash();
         });
 
-        // 問題4：数字以外が入力されたら落ちるバグ
+        // 問題4：型変換 (修正済み)
         findViewById(R.id.btnProblem4).setOnClickListener(v -> {
-            String userInput = "123a"; // ユーザーが間違って文字を混ぜて入力したと想定
+            String userInput = "123a"; 
             processUserInput(userInput);
         });
 
-        // 問題5：文字は合っているはずなのに、なぜか条件をすり抜けるバグ
+        // 問題5：文字列比較 (修正済み)
         findViewById(R.id.btnProblem5).setOnClickListener(v -> {
             checkAdminStatus();
         });
 
-        // 問題6：ボタンを連打するとカウントがめちゃくちゃになるバグ
+        // 問題6：非同期処理の連打対策（修正済み）
         findViewById(R.id.btnProblem6).setOnClickListener(v -> {
             triggerAsyncDownload((Button) v);
         });
+
+        // 問題7：IndexOutOfBoundsExceptionバグ
+        findViewById(R.id.btnProblem7).setOnClickListener(v -> {
+            accessInvalidIndex();
+        });
+
+        // 問題8：浮動小数点の精度バグ
+        findViewById(R.id.btnProblem8).setOnClickListener(v -> {
+            checkFloatingPointMath();
+        });
+
+        // 問題9：StackOverflowErrorバグ
+        findViewById(R.id.btnProblem9).setOnClickListener(v -> {
+            startInfiniteRecursion(0);
+        });
     }
 
-    // --- 問題1のバグメソッド ---
+    // --- 問題1〜3 (省略せずに維持) ---
     private int calculateTotal(int a, int b) {
-        Log.d(TAG, "calculateTotalが呼び出されました。a=" + a + ", b=" + b);
         int wrongMultiplier = 10;
-        // バグ：本来は (a + b) ですが、練習用に multiplier を掛けています
-        int total = (a + b) * wrongMultiplier;
-        return total;
+        return (a + b) * wrongMultiplier;
     }
 
-    // --- 問題2のバグメソッド ---
     private int runLoopAndSum() {
         int sum = 0;
         for (int i = 1; i <= 5; i++) {
             sum += i;
-            // バグ：i == 3 のときだけ合計を2倍にする謎の処理
-            if (i == 3) {
-                sum *= 2;
-            }
+            if (i == 3) sum *= 2;
         }
         return sum;
     }
 
-    // --- 問題3のバグメソッド ---
     private void causeCrash() {
         List<String> textList = null;
-        // バグ：nullオブジェクトに対してアクセスしているためクラッシュする
-        int size = textList.size();
+        int size = textList.size(); 
         Log.d(TAG, "サイズは: " + size);
     }
 
-    // --- 問題4：型変換のバグ（初級・データ検証） ---
+    // --- 問題4：型変換 (修正済み) ---
     private void processUserInput(String input) {
-        // 【デバッグワーク】文字列を数値に変換しようとしてクラッシュします。
-        // Logcatで「NumberFormatException」が発生していることを確認してください。
         try {
-            int score = Integer.parseInt(input); // 💥「123a」は数値に変換できないのでクラッシュ！
-            tvResult.setText("スコアを登録しました: " + score);
+            int score = Integer.parseInt(input);
+            tvResult.setText("スコア: " + score);
         } catch (NumberFormatException e) {
-            tvResult.setText("エラー：正しい値を入力してください");
+            tvResult.setText("エラー：数値ではない入力がありました");
         }
     }
 
-    // --- 問題5：文字列比較のバグ（中級・文字コードの罠） ---
+    // --- 問題5：文字列比較 (修正済み) ---
     private void checkAdminStatus() {
-        // サーバーや入力フォームから取得したデータ（末尾に目に見えないスペースが入っている想定）
-        String currentRole = "ADMIN";
-
-        // 【デバッグワーク】この行にブレークポイントを置き、変数「currentRole」を右クリック。
-        // 「Evaluate Expression」を開き、変数の正確な文字数や中身を調査せよ。
+        String currentRole = "ADMIN"; 
         if (currentRole.equals("ADMIN")) {
-            tvResult.setText("管理者画面へようこそ");
+            tvResult.setText("管理者です");
         } else {
-            // 本来は管理者なのに、なぜかこっちに入ってしまうバグ
-            tvResult.setText("エラー：管理者権限がありません（現在の権限: " + currentRole + "）");
+            tvResult.setText("拒否されました: [" + currentRole + "]");
         }
     }
 
-    // --- 問題6：非同期処理のバグ（上級・マルチスレッド） ---
+    // --- 問題6：非同期処理 ---
     private void triggerAsyncDownload(final Button btn) {
-        tvResult.setText("ダウンロード開始...");
-        // 連打対策：ダウンロード中はボタンを押せなくする
+        tvResult.setText("ダウンロード中...");
         btn.setEnabled(false);
-
-        // 模擬的な非同期処理（1秒後にカウントを増やすスレッドを起動）
         new Thread(() -> {
             try {
-                Thread.sleep(1000); // 1秒待つ処理
+                Thread.sleep(1000);
                 downloadCount++;
-
-                // 画面を更新する（Androidはメインスレッド以外から画面を触るとエラーになるためrunOnUiThreadを使用）
                 runOnUiThread(() -> {
-                    tvResult.setText("ダウンロード完了！合計: " + downloadCount + "回");
-                    // 完了したのでボタンを再度有効化
+                    tvResult.setText("完了！合計: " + downloadCount);
                     btn.setEnabled(true);
                 });
             } catch (InterruptedException e) {
@@ -134,5 +129,34 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(() -> btn.setEnabled(true));
             }
         }).start();
+    }
+
+    // --- 問題7：リストの範囲外アクセス ---
+    private void accessInvalidIndex() {
+        List<String> fruits = new ArrayList<>(Arrays.asList("Apple", "Banana", "Cherry"));
+        // 3つの要素（0, 1, 2）があるリストで、fruits.get(3) を呼ぼうとしてクラッシュします
+        String lastFruit = fruits.get(fruits.size()); // 💥 sizeは3なので index 3 は存在しない
+        tvResult.setText("最後のフルーツ: " + lastFruit);
+    }
+
+    // --- 問題8：小数計算の罠 ---
+    private void checkFloatingPointMath() {
+        double value = 0.0;
+        for (int i = 0; i < 10; i++) {
+            value += 0.1;
+        }
+
+        // 0.1を10回足すと 1.0 になるはずだが、doubleの精度誤差で 0.99999... になる
+        if (value == 1.0) {
+            tvResult.setText("結果はピッタリ 1.0 です");
+        } else {
+            tvResult.setText("1.0 ではありません。実際は: " + value);
+        }
+    }
+
+    // --- 問題9：無限再帰 ---
+    private void startInfiniteRecursion(int count) {
+        Log.d(TAG, "呼び出し回数: " + count);
+        startInfiniteRecursion(count + 1); // 💥 止まらない呼び出し
     }
 }

@@ -58,6 +58,30 @@
         android:text="問題6：非同期処理の罠（タップ連打）"
         android:layout_marginBottom="16dp"/>
 
+    <!-- 問題7用 -->
+    <Button
+        android:id="@+id/btnProblem7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="問題7：リストの範囲外アクセス"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- 問題8用 -->
+    <Button
+        android:id="@+id/btnProblem8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="問題8：小数計算の誤差バグ"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- 問題9用 -->
+    <Button
+        android:id="@+id/btnProblem9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="問題9：無限呼び出し（スタックオーバーフロー）"
+        android:layout_marginBottom="16dp"/>
+
     <TextView
         android:id="@+id/tvResult"
         android:layout_width="match_parent"
