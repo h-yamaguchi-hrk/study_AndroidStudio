@@ -87,8 +87,12 @@ public class MainActivity extends AppCompatActivity {
     private void processUserInput(String input) {
         // 【デバッグワーク】文字列を数値に変換しようとしてクラッシュします。
         // Logcatで「NumberFormatException」が発生していることを確認してください。
-        int score = Integer.parseInt(input); // 💥「123a」は数値に変換できないのでクラッシュ！
-        tvResult.setText("スコアを登録しました: " + score);
+        try {
+            int score = Integer.parseInt(input); // 💥「123a」は数値に変換できないのでクラッシュ！
+            tvResult.setText("スコアを登録しました: " + score);
+        } catch (NumberFormatException e) {
+            tvResult.setText("エラー：正しい値を入力してください");
+        }
     }
 
     // --- 問題5：文字列比較のバグ（中級・文字コードの罠） ---
