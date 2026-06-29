@@ -1,137 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="デバッグ練習用アプリ"
-        android:textSize="24sp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="24dp"/>
-
-    <Button
-        android:id="@+id/btnProblem1"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="問題1：計算バグ（確認用）"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/btnProblem2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="問題2：ループ処理バグ（確認用）"
-        android:layout_marginBottom="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="デバッグ練習用アプリ"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"/>
 
-    <Button
-        android:id="@+id/btnProblem3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="問題3：強制終了バグ（確認用）"
-        android:layout_marginBottom="16dp"/>
+        <Button
+            android:id="@+id/btnProblem1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題1：計算バグ（確認用）"
+            android:layout_marginBottom="16dp"/>
 
-    <!-- 問題4用 -->
-    <Button
-        android:id="@+id/btnProblem4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="問題4：型変換と入力のバグ"
-        android:layout_marginBottom="16dp"/>
+        <Button
+            android:id="@+id/btnProblem2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題2：ループ処理バグ（確認用）"
+            android:layout_marginBottom="16dp"/>
 
-    <!-- 問題5用 -->
-    <Button
-        android:id="@+id/btnProblem5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="問題5：文字列比較の落とし穴"
-        android:layout_marginBottom="16dp"/>
+        <Button
+            android:id="@+id/btnProblem3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題3：強制終了バグ（確認用）"
+            android:layout_marginBottom="16dp"/>
 
-    <!-- 問題6用 -->
-    <Button
-        android:id="@+id/btnProblem6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="問題6：非同期処理の罠（タップ連打）"
-        android:layout_marginBottom="16dp"/>
+        <!-- 問題4用 -->
+        <Button
+            android:id="@+id/btnProblem4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題4：型変換と入力のバグ"
+            android:layout_marginBottom="16dp"/>
 
-    <!-- 問題7用 -->
-    <Button
-        android:id="@+id/btnProblem7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="問題7：リストの範囲外アクセス"
-        android:layout_marginBottom="16dp"/>
+        <!-- 問題5用 -->
+        <Button
+            android:id="@+id/btnProblem5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題5：文字列比較の落とし穴"
+            android:layout_marginBottom="16dp"/>
 
-    <!-- 問題8用 -->
-    <Button
-        android:id="@+id/btnProblem8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="問題8：小数計算の誤差バグ"
-        android:layout_marginBottom="16dp"/>
+        <!-- 問題6用 -->
+        <Button
+            android:id="@+id/btnProblem6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題6：非同期処理の罠（タップ連打）"
+            android:layout_marginBottom="16dp"/>
 
-    <!-- 問題9用 -->
-    <Button
-        android:id="@+id/btnProblem9"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="問題9：無限呼び出し（スタックオーバーフロー）"
-        android:layout_marginBottom="16dp"/>
+        <!-- 問題7用 -->
+        <Button
+            android:id="@+id/btnProblem7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題7：リストの範囲外アクセス"
+            android:layout_marginBottom="16dp"/>
 
-    <!-- 文字入力テスト用セクション -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="▼ 文字入力テストエリア"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"/>
+        <!-- 問題8用 -->
+        <Button
+            android:id="@+id/btnProblem8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題8：小数計算の誤差バグ"
+            android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/etInputMain"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="メイン入力（名前や数値など）"
-        android:inputType="text"/>
+        <!-- 問題9用 -->
+        <Button
+            android:id="@+id/btnProblem9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題9：無限呼び出し（スタックオーバーフロー）"
+            android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/etInputSub"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="サブ入力（確認用パスワードなど）"
-        android:inputType="textPassword"/>
+        <!-- 文字入力テスト用セクション -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="▼ 文字入力テストエリア"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
 
-    <Button
-        android:id="@+id/btnProblem10"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="問題10：未入力チェックのバグ"
-        android:layout_marginTop="8dp"/>
+        <EditText
+            android:id="@+id/etInputMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="メイン入力（名前や数値など）"
+            android:inputType="text"/>
 
-    <Button
-        android:id="@+id/btnProblem11"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="問題11：メール形式バリデーションの罠"/>
+        <EditText
+            android:id="@+id/etInputSub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="サブ入力（確認用パスワードなど）"
+            android:inputType="textPassword"/>
 
-    <Button
-        android:id="@+id/btnProblem12"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="問題12：パスワード一致判定のミス"/>
+        <Button
+            android:id="@+id/btnProblem10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題10：未入力チェックのバグ"
+            android:layout_marginTop="8dp"/>
 
-    <TextView
-        android:id="@+id/tvResult"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ここに結果が表示されます"
-        android:textSize="18sp"
-        android:textColor="#333333"
-        android:layout_marginTop="24dp"
-        android:gravity="center"/>
+        <Button
+            android:id="@+id/btnProblem11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題11：メール形式バリデーションの罠"/>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnProblem12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="問題12：パスワード一致判定のミス"/>
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ここに結果が表示されます"
+            android:textSize="18sp"
+            android:textColor="#333333"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:paddingBottom="32dp"/>
+
+    </LinearLayout>
+</ScrollView>
